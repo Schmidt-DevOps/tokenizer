@@ -1,10 +1,6 @@
 # tokenizer
 
-[![lesnitsky.dev](https://lesnitsky.dev/shield.svg?hash=35651)](https://lesnitsky.dev?utm_source=tokenizer)
-[![GitHub stars](https://img.shields.io/github/stars/lesnitsky/tokenizer.svg?style=social)](https://github.com/lesnitsky/tokenizer)
-[![Twitter Follow](https://img.shields.io/twitter/follow/lesnitsky_dev.svg?label=Follow%20me&style=social)](https://twitter.com/lesnitsky_dev)
-
-Converts a stream of strings into stream of tokens splitted by delimiters
+Converts a stream of strings into a stream of tokens separated by delimiters.
 
 ## Installation
 
