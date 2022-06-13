@@ -3,7 +3,7 @@ import 'token.dart';
 
 class Tokenizer {
   final Set<String> delimiters = {' ', '\n'};
-  var tokenizeDelimiters = true;
+  bool tokenizeDelimiters = true;
 
   StreamTransformer<String, Token> streamTransformer;
 

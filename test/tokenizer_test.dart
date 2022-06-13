@@ -64,11 +64,7 @@ void main() {
 
     expect(
       tokens,
-      equals([
-        Token('Lorem'),
-        Token('ipsum'),
-        Token('dolor')
-      ]),
+      equals([Token('Lorem'), Token('ipsum'), Token('dolor')]),
     );
   });
 }
