@@ -4,7 +4,7 @@
 # This specific template is located at:
 # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Dart.gitlab-ci.yml
 
-image: dart/2-sdk
+image: dart:2-sdk
 
 variables:
   # Use to learn more:
@@ -19,7 +19,7 @@ cache:
 
 before_script:
   - export PATH="$PATH:$HOME/.pub-cache/bin"
-  - pub get --no-precompile
+  - dart pub get --no-precompile
 
 test:
   stage: test
