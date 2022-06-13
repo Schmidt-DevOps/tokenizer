@@ -1,4 +1,6 @@
-# tokenizer
+# Dart Tokenizer
+
+[![Dart](https://github.com/Schmidt-DevOps/tokenizer/actions/workflows/dart.yml/badge.svg)](https://github.com/Schmidt-DevOps/tokenizer/actions/workflows/dart.yml)
 
 Converts a stream of strings into a stream of tokens separated by delimiters.
 
