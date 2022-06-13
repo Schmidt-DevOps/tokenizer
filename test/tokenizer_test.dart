@@ -49,4 +49,26 @@ void main() {
       ]),
     );
   });
+  test('tokenizes a string but excludes delimiters', () async {
+    final string = 'Lorem, ipsum-dolor';
+    final tokenizer = Tokenizer({' ', ',', '-'});
+    tokenizer.tokenizeDelimiters = false;
+
+    final c = StreamController<String>();
+
+    c.add(string);
+    c.close();
+
+    final tokens =
+        await c.stream.transform(tokenizer.streamTransformer).toList();
+
+    expect(
+      tokens,
+      equals([
+        Token('Lorem'),
+        Token('ipsum'),
+        Token('dolor')
+      ]),
+    );
+  });
 }

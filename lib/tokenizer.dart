@@ -3,6 +3,7 @@ import 'token.dart';
 
 class Tokenizer {
   final Set<String> delimiters = {' ', '\n'};
+  var tokenizeDelimiters = true;
 
   StreamTransformer<String, Token> streamTransformer;
 
@@ -26,7 +27,7 @@ class Tokenizer {
 
       if (delimiters.contains(char)) {
         if (_sequence.length > 0) yield Token(_sequence);
-        yield Token(char);
+        if (tokenizeDelimiters) yield Token(char);
         _sequence = '';
       } else {
         _sequence += char;
