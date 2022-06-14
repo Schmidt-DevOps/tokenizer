@@ -2,6 +2,9 @@ import 'dart:async';
 
 import 'package:tokenizer/tokenizer.dart';
 
+/**
+ * Shows the basic function of the tokenizer
+ */
 void main(List<String> args) async {
   final string = 'Hello, world';
   final tokenizer = Tokenizer({','});
