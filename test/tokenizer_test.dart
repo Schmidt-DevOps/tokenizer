@@ -50,7 +50,7 @@ void main() {
     );
   });
   test('tokenizes a string but excludes delimiters', () async {
-    final string = 'Lorem, ipsum-dolor';
+    final string = '    Lorem,,,,     ipsum-----dolor     ';
     final tokenizer = Tokenizer({' ', ',', '-'});
     tokenizer.tokenizeDelimiters = false;
 
