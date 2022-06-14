@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:tokenizer/token.dart';
 import 'package:tokenizer/tokenizer.dart';
 
 /**
@@ -16,10 +17,18 @@ void main(List<String> args) async {
 
   final tokens = await c.stream.transform(tokenizer.streamTransformer).toList();
 
-  String regexp = "";
-  tokens.forEach((token) {
-    regexp += "(?=.*${token.value})";
-  });
-  regexp += ".*";
+  String regexp = buildRegexp(tokens);
   print(regexp); // (?=.*Hello)(?=.*world).*
+}
+
+/**
+ * Build a regexp from tokenized string where all tokens may occur
+ * in arbitrary order (using positive lookaheads).
+ */
+String buildRegexp(List<Token> tokens) {
+  String regexp = "";
+  tokens.forEach((token) => regexp += "(?=.*${token.value})");
+  regexp += ".*";
+
+  return regexp;
 }
