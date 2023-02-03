@@ -8,11 +8,13 @@ import 'package:tokenizer/tokenizer.dart';
  */
 void main(List<String> args) async {
   final string = ' Vollkorn   Nudeln,   bio '; // add crazy whitespace too
+  final string2 = ' ay bee cee '; // add crazy whitespace too
   final tokenizer = Tokenizer({',', ' '});
   tokenizer.tokenizeDelimiters = false; // not interested in delimiters here
   final c = StreamController<String>();
 
   c.add(string);
+  c.add(string2);
   c.close();
 
   final tokens = await c.stream.transform(tokenizer.streamTransformer).toList();
