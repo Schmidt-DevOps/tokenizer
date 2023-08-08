@@ -1,39 +1,47 @@
 import 'dart:async';
-import 'token.dart';
 
 class Tokenizer {
-  final Set<String> delimiters = {' ', '\n'};
-  bool tokenizeDelimiters = true;
+  final Set<String> separators;
+  late final StreamTransformer<String, String> transformer;
+  final StringBuffer _sb = StringBuffer();
+  final bool emitSeparators;
 
-  StreamTransformer<String, Token> streamTransformer;
-
-  Tokenizer([Set<String> delimiters]) {
-    this.delimiters.addAll(delimiters ?? {});
-
-    streamTransformer = StreamTransformer.fromHandlers(
-      handleData: (data, sink) {
-        for (var token in tokenize(data)) {
-          sink.add(token);
-        }
-      },
+  Tokenizer(this.separators, {this.emitSeparators = true}) {
+    transformer = StreamTransformer.fromHandlers(
+      handleData: handleData,
+      handleDone: handleDone,
+      handleError: handleError,
     );
   }
 
-  Iterable<Token> tokenize(String chunk) sync* {
-    String _sequence = '';
+  void handleData(String data, EventSink sink) {
+    for (int i = 0; i < data.length; i++) {
+      final char = data[i];
 
-    for (int i = 0; i < chunk.length; i++) {
-      final char = chunk[i];
+      if (separators.contains(char)) {
+        if (_sb.isNotEmpty) {
+          sink.add(_sb.toString());
+          _sb.clear();
+        }
 
-      if (delimiters.contains(char)) {
-        if (_sequence.length > 0) yield Token(_sequence);
-        if (tokenizeDelimiters) yield Token(char);
-        _sequence = '';
+        if (emitSeparators) {
+          sink.add(char);
+        }
       } else {
-        _sequence += char;
+        _sb.write(char);
       }
     }
+  }
 
-    if (_sequence.length > 0) yield Token(_sequence);
+  void handleDone(EventSink sink) {
+    if (_sb.isNotEmpty) {
+      sink.add(_sb.toString());
+      _sb.clear();
+    }
+    sink.close();
+  }
+
+  void handleError(Object error, StackTrace stackTrace, EventSink sink) {
+    sink.addError(error, stackTrace);
   }
 }

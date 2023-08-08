@@ -6,23 +6,23 @@ import 'package:tokenizer/tokenizer.dart';
 void main() {
   test('tokenizes a string, space as delimiter', () async {
     final string = 'Lorem ipsum dolor';
-    final tokenizer = Tokenizer();
+    final tokenizer = Tokenizer({" "});
     final c = StreamController<String>();
 
     c.add(string);
     c.close();
 
     final tokens =
-        await c.stream.transform(tokenizer.streamTransformer).toList();
+    await c.stream.transform(tokenizer.transformer).toList();
 
     expect(
       tokens,
       equals([
-        Token('Lorem'),
-        Token(' '),
-        Token('ipsum'),
-        Token(' '),
-        Token('dolor')
+        'Lorem',
+        ' ',
+        'ipsum',
+        ' ',
+        'dolor'
       ]),
     );
   });
@@ -34,25 +34,24 @@ void main() {
     c.add(string);
     c.close();
 
-    final tokens =
-        await c.stream.transform(tokenizer.streamTransformer).toList();
+    final tokens = await c.stream.transform(tokenizer.transformer).toList();
 
     expect(
       tokens,
       equals([
-        Token('Lorem'),
-        Token(','),
-        Token(' '),
-        Token('ipsum'),
-        Token('-'),
-        Token('dolor')
+        'Lorem',
+        ',',
+        ' ',
+        'ipsum',
+        '-',
+        'dolor'
       ]),
     );
   });
   test('tokenizes a string but excludes delimiters', () async {
     final string = '    Lorem,,,,     ipsum-----dolor     ';
-    final tokenizer = Tokenizer({' ', ',', '-'});
-    tokenizer.tokenizeDelimiters = false;
+    final tokenizer = Tokenizer({' ', ',', '-'}, emitSeparators: false);
+    // tokenizer.tokenizeDelimiters = false;
 
     final c = StreamController<String>();
 
@@ -60,11 +59,11 @@ void main() {
     c.close();
 
     final tokens =
-        await c.stream.transform(tokenizer.streamTransformer).toList();
+    await c.stream.transform(tokenizer.transformer).toList();
 
     expect(
       tokens,
-      equals([Token('Lorem'), Token('ipsum'), Token('dolor')]),
+      equals(['Lorem', 'ipsum', 'dolor']),
     );
   });
 }
