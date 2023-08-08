@@ -4,6 +4,6 @@ version: 1.0.0
 homepage: https://github.com/lesnitsky/tokenizer
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: '>=2.19.0 <3.9999.9999'
 
 dev_dependencies: { test: ^1.21.1 }
