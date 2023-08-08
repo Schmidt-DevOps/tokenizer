@@ -1,0 +1,26 @@
+name: Flutter CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3 # https://github.com/actions/checkout
+
+      - name: Install requirements
+        run: apt update && apt install -y jq
+
+      - name: Set up Flutter
+        uses: https://github.com/subosito/flutter-action@v2 # https://github.com/subosito/flutter-action
+        with:
+          flutter-version: '3.10.3'
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run tests
+        run: flutter test
