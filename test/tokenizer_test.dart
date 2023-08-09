@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:test/test.dart';
-import 'package:tokenizer/token.dart';
 import 'package:tokenizer/tokenizer.dart';
 
 void main() {

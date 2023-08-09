@@ -13,6 +13,6 @@ void main(List<String> args) async {
   c.add(string);
   c.close();
 
-  final tokens = await c.stream.transform(tokenizer.streamTransformer).toList();
-  print(tokens); // [Token("Hello"), Token(","), Token(" "), Token("world")]
+  final tokens = await c.stream.transform(tokenizer.transformer).toList();
+  print(tokens); // "Hello", ",", " ", "world"
 }
