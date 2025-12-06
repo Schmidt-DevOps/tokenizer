@@ -20,7 +20,7 @@ jobs:
           flutter-version: '3.10.3'
 
       - name: Install dependencies
-        run: flutter pub get
+        run: make pub-get
 
       - name: Run tests
-        run: flutter test
+        run: make test

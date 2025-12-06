@@ -17,7 +17,7 @@ jobs:
       - name: Set up Flutter
         uses: https://github.com/subosito/flutter-action@v2 # https://github.com/subosito/flutter-action
         with:
-          flutter-version: '3.10.3'
+          flutter-version: '3.5.0'
 
       - name: Install dependencies
         run: make pub-get
