@@ -3,7 +3,9 @@ description: Converts a stream of strings into a stream of tokens separated by d
 version: 1.0.1
 homepage: https://github.com/lesnitsky/tokenizer
 
+# https://github.com/subosito/flutter-action?tab=readme-ov-file#use-version-from-pubspecyaml
 environment:
-  sdk: '>=3.5.0 <4.0.0'
+  sdk: ">=3.3.0 <4.0.0"
+  flutter: 3.38.0
 
 dev_dependencies: { test: ^1.26.3 }
