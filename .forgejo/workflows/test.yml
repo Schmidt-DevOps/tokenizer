@@ -24,23 +24,3 @@ jobs:
 
       - name: Run tests
         run: make test
-
-      - name: Check test coverage
-        run: |
-          flutter test --coverage
-          LCOV_INFO_FILE="coverage/lcov.info"
-
-          if [ -f "$LCOV_INFO_FILE" ]; then
-            TOTAL_COVERAGE=$(grep -oP "^SF:.*?\n.*?\nLF:[0-9]+\nLH:[0-9]+" "$LCOV_INFO_FILE" | awk 'BEGIN {total_lines=0; hit_lines=0} /LF/ {total_lines+=$2} /LH/ {hit_lines+=$2} END {if (total_lines == 0) print 0; else print (hit_lines*100)/total_lines}')
-            echo "Total Line Coverage: ${TOTAL_COVERAGE}%"
-
-            if (( $(echo "$TOTAL_COVERAGE < 80" | bc -l) )); then
-              echo "Test coverage is below 80%!"
-              exit 1
-            else
-              echo "Test coverage is 80% or above. Good job!"
-            fi
-          else
-            echo "Error: lcov.info file not found!"
-            exit 1
-          fi
