@@ -1,7 +1,7 @@
 
-.PHONY: all pub-get test clean format analyze
+.PHONY: all pub-get test clean format analyze coverage show_coverage clean-coverage
 
-all: pub-get test
+all: test
 
 pub-get:
 	flutter pub get
@@ -9,8 +9,11 @@ pub-get:
 test:
 	flutter test
 
-clean:
+clean: clean-coverage
 	flutter clean
+
+clean-coverage:
+	rm -rf coverage lcov.info
 
 format:
 	flutter format .
@@ -26,6 +29,3 @@ show_coverage:
 	genhtml coverage/lcov.info -o coverage/html
 	xdg-open coverage/html/index.html
 
-clean-coverage:
-	rm -rf coverage
-	rm -f lcov.info

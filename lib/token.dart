@@ -1,3 +1,4 @@
+/// Represents a token with a value
 class Token {
   final String value;
 
@@ -11,6 +12,9 @@ class Token {
   @override
   int get hashCode => value.hashCode;
 
-  toString() => 'Token("${value.replaceAll('\n', '\\n')}")';
-  toStringShort() => value;
+  @override
+  String toString() => 'Token("${value.replaceAll('\n', '\\n')}")';
+  
+  /// Returns a short representation of the token
+  String toStringShort() => value;
 }

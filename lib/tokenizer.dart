@@ -1,47 +1,56 @@
 import 'dart:async';
 
+/// A tokenizer that converts a stream of strings into a stream of tokens
+/// based on a set of defined separators.
 class Tokenizer {
   final Set<String> separators;
   late final StreamTransformer<String, String> transformer;
-  final StringBuffer _sb = StringBuffer();
   final bool emitSeparators;
 
   Tokenizer(this.separators, {this.emitSeparators = true}) {
     transformer = StreamTransformer.fromHandlers(
-      handleData: handleData,
-      handleDone: handleDone,
-      handleError: handleError,
+      handleData: _handleData,
+      handleDone: _handleDone,
+      handleError: _handleError,
     );
   }
 
-  void handleData(String data, EventSink sink) {
+  /// Processes incoming data and emits tokens
+  void _handleData(String data, EventSink<String> sink) {
+    final StringBuffer buffer = StringBuffer();
+    
     for (int i = 0; i < data.length; i++) {
       final char = data[i];
-
+      
       if (separators.contains(char)) {
-        if (_sb.isNotEmpty) {
-          sink.add(_sb.toString());
-          _sb.clear();
+        // Emit the accumulated token if exists
+        if (buffer.isNotEmpty) {
+          sink.add(buffer.toString());
+          buffer.clear();
         }
-
+        
+        // Emit separator if configured to do so
         if (emitSeparators) {
           sink.add(char);
         }
       } else {
-        _sb.write(char);
+        buffer.write(char);
       }
+    }
+    
+    // Emit any remaining token
+    if (buffer.isNotEmpty) {
+      sink.add(buffer.toString());
     }
   }
 
-  void handleDone(EventSink sink) {
-    if (_sb.isNotEmpty) {
-      sink.add(_sb.toString());
-      _sb.clear();
-    }
+  /// Handles the completion of the stream
+  void _handleDone(EventSink<String> sink) {
     sink.close();
   }
 
-  void handleError(Object error, StackTrace stackTrace, EventSink sink) {
+  /// Handles errors in the stream
+  void _handleError(Object error, StackTrace stackTrace, EventSink<String> sink) {
     sink.addError(error, stackTrace);
   }
 }
